@@ -1,0 +1,23 @@
+@mixin transition($property, $duration) {
+    transition-property: $property;
+    transition-duration: $duration;
+
+}
+
+@mixin underline-trnsition($width) {
+    &::after{
+        content: '';
+        display: block;
+        bottom: 0;
+        left: 0;
+        height: 0.2em;
+        background-color: $accent-color;
+        transform: scaleX(0);
+        @include transition(transform, 0.3s );
+    }
+    &:hover{
+        &::after{
+            transform: scaleX($width);
+        }
+    }
+}

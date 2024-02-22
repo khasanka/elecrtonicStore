@@ -1,0 +1,78 @@
+@import '../../style/sass/variables';
+
+
+.header{
+    max-width: 100%;
+    box-shadow: 5px 5px 20px blue;
+  }
+  
+  .row div{
+    display: inline-block;
+  }
+  
+  .brand {
+    color: rgb(92, 183, 236);
+    margin-left: 2%;
+    padding: 0.8em;
+    width: 20%;
+  }
+  .inp-container input{
+    display: inline-block;
+    width: 74%;
+    height: $element-hight;
+  }
+  
+  .inp-container button{
+    width: 10%;
+    height: $element-hight;
+    border: none;
+    background-color: #dadada;
+  }
+  
+  .dropdown{
+    width: 16%;
+  }
+  
+  .select-btn{
+    height:$element-hight;
+    border: none;
+    background-color: #dadada;
+    font-weight: 600;
+  }
+  
+  .login-container{
+    width: 15%;
+    color: white;
+    text-align: right;
+    margin: 1.7em 0.2em 0 0;
+  }
+  
+  .login-container i,h5{
+    display: inline-block;
+  }
+  
+  .login-container a{
+    text-decoration: none;
+    color: white;
+  }
+  
+  .user-icon{
+    margin-right: 0.4em;
+    padding: 0.2em;
+    font-size: $icon-font;
+  }
+  
+  .cart-wishlist .list-icon{
+    color: white;
+    font-size: $icon-font;
+    list-style-type: none;
+    display: inline-block;
+    margin-right: 0.5em;
+  
+  }
+  
+  .cart-wishlist{
+    width: 7%;
+    margin-top: 1.7em;
+    margin-left: 1em;
+  }
