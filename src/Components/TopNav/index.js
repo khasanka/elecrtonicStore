@@ -5,7 +5,7 @@ const TopNav = () => {
     return (
         <div>
             <div className='header bg-dark'>
-                <div className='row'>
+                <div className='row top-nav-row'>
                     {/* brand name */}
                     <div className='brand my-1'>
                         <h1>ElecShop</h1>
