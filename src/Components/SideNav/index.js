@@ -1,6 +1,10 @@
+import { useSelector } from 'react-redux';
 import './_side-nav.scss'
+import accordionCatSlice from '../../store/accordionCatSlice';
 
 const SideNav = () => {
+
+    const accordionData = useSelector(accordionCatSlice.getInitialState);
 
     return(
 
@@ -10,27 +14,38 @@ const SideNav = () => {
             </div>
 
             <div className='accordion'>
-                <div className='accordion-item individual-category'>
-                    <div className='accordion-header'>
-                        <button className='accordion-button' data-bs-target='#accordion-heading-one' data-bs-toggle='collapse'>
-                            <div className='category-title'>
-                                <a href='#'>Components</a>
-                                
+
+                {
+                   accordionData.map( (accodionCategory, key) => {
+                    return (
+                        <div className='accordion-item individual-category'>
+                            <div className='accordion-header'>
+                                <button className='accordion-button' data-bs-target={"#collapse" + key} data-bs-toggle='collapse'>
+                                    <div className='category-title'>
+                                        <a href='#'>{accodionCategory.category}</a>
+                                        
+                                    </div>
+                                </button>
                             </div>
-                        </button>
-                    </div>
-                    <div className='accordian-collapse collapse show' id='accordion-heading-one'>
-                        <div className='accordion-body'>
-                            <ul>
-                                <li className='sub-items'> <a href='#'>LED</a></li>
-                                <li className='sub-items'> <a href='#'>Diode</a></li>
-                                <li className='sub-items'> <a href='#'>Resistor</a></li>
-                                <li className='sub-items'> <a href='#'>Push Button</a></li>
-                            </ul>
+                            <div className='accordian-collapse collapse show' id={"collapse" + key}>
+                                <div className='accordion-body'>
+                                    <ul>
+                                        {accodionCategory.items.map((item) =>{
+                                            return (
+                                                <li className='sub-items'> <a href='#'>{item}</a></li>
+
+                                            )
+                                        })}
+                                        
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
 
-                    </div>
-                </div>
+                    )
+                   })
+                }
+
             </div>
 
         </div>
