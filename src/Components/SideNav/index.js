@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import './_side-nav.scss'
-import accordionCatSlice from '../../store/accordionCatSlice';
+import accordionCatSlice from '../../Redux/Accordion/accordionSlice';
 
 const SideNav = () => {
 
