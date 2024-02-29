@@ -21,13 +21,12 @@ const CatNav = () => {
                 <ul>
                     { 
                         categories.map((cat) => {
-                            return (
-
-                                <li className='list-item'> <a href='#'>{cat.category}</a></li>
-
-                            )
+                            if(cat.parentCategory === null)  {
+                                return (
+                                    <li className='list-item'> <a href='#'>{cat.category}</a></li>
+                                )
+                            }
                         })
-                       
                     }
                 </ul>
             </div>
