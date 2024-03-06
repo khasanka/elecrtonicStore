@@ -1,30 +1,42 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getProducts } from "./action";
 
-const initialState = [
-    {
-        name:"LED",
-        price:5,
-        img:"LED.jpeg"
-    },{
-        name:"Diode",
-        price:8,
-        img:"Diode.jpg"
-    },{
-        name:"Resistor",
-        price:2,
-        img:"Resistor.png"
-    },{
-        name:"Push Button",
-        price:2,
-        img:"PushButton.jpg"
-    }
-
-];
+const initialState = {
+    products: [],
+    status: "idel",
+    error: ""
+};
 
 const productSlice = createSlice({
-        name: "products",
-        initialState
-    }
-);
+    name: "products",
+    initialState,
+    reducers: {
+      filterProducts : (state, action)=> {
+        const filterData = action.payload.products.filter((ele) => {
+          // console.log("element =>",ele);
+          // console.log("action.payload.selectedCategory =>",action.payload.selectedCategory);
 
-export default productSlice;
+          return ele.categoryId == action.payload.selectedCategory.categoryId
+        });
+        state.products = filterData;
+      }
+    },
+    extraReducers: (builder) => {
+        builder
+          .addCase(getProducts.pending, (state, action) => {
+            state.status = "Loading...";
+          })
+          .addCase(getProducts.fulfilled, (state, action) => {
+            state.status = "success"; 
+            state.products = action.payload;
+            state.error = ""; 
+          })
+          .addCase(getProducts.rejected, (state, action) => {
+            state.status = "failed"; 
+            state.error = action.error.message;
+          });
+      }
+});
+
+export const {filterProducts} = productSlice.actions;
+export default productSlice.reducer;

@@ -1,17 +1,39 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './_side-nav.scss'
-import accordionCatSlice from '../../Redux/Accordion/accordionSlice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getCategories } from '../../Redux/Category/actions';
+import { filterProducts } from '../../Redux/Product/productSlice';
 
 const SideNav = () => {
 
+    // === this is for dategory data (get data from categoryReducer)
     const accordionData = useSelector(state => state.categoryReducer.categories);
-    const dispatch = useDispatch();
 
-    useEffect(()=>{
-        dispatch(getCategories);
-    },[]);
+    // ---- Here we are fech original values from DB (Actually we get data form productReduser here)
+    const fetchedProductData = useSelector(state => state.pr);
+    const [products, setProducts] = useState();
+
+    const dispatch = useDispatch();
+    // useEffect(()=>{
+    //     // === here we are triggering DB Call
+    //     dispatch(getCategories);
+    // },[]);
+
+
+    // ---- Here fetch data from productReduser, set those products into 'products' using useState()
+    useEffect( () => {
+        setProducts(fetchedProductData.products);
+    },[fetchedProductData.status]); // inside [fetchedProductData.status] we are waiting to change 'fetchedProductData' productReduser status 'idel' to 'sucess'
+
+    // --- this is button action send all newly loaded products and selectedCategory as payload to  filterProducts() raduser in product slice 
+    const filterData = (selectedCategory) => {
+        // console.log("selectedCaregory => ",selectedCategory);
+        // console.log("products => ",products);
+        const payload = {selectedCategory, products};
+        dispatch(filterProducts(payload));
+    }
+
+    
 
     return(
 
@@ -44,7 +66,7 @@ const SideNav = () => {
                                                 accordionData.map((subCategory ) =>{
                                                     if(subCategory.parentCategory == accodionCategory.categoryId) {
                                                         return (
-                                                            <li className='sub-items'> <a href='#'>{subCategory.category}</a></li>
+                                                            <li className='sub-items'> <a href='#' onClick={()=> filterData(subCategory)}>{subCategory.category}</a></li>
                                                         )
                                                     }
         
