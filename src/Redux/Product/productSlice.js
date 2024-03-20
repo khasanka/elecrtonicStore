@@ -19,6 +19,14 @@ const productSlice = createSlice({
           return ele.categoryId == action.payload.selectedCategory.categoryId
         });
         state.products = filterData;
+      },
+      filterByPrice : (state, action) => {
+        console.log("action.payload => ", action.payload);
+        const filterData = action.payload.products.filter((ele) => {
+          return ele.price >= action.payload.minPriceLimit ;
+        });
+        console.log("filterData => ", filterData);
+        state.products = filterData;
       }
     },
     extraReducers: (builder) => {
@@ -38,5 +46,5 @@ const productSlice = createSlice({
       }
 });
 
-export const {filterProducts} = productSlice.actions;
+export const {filterProducts, filterByPrice} = productSlice.actions;
 export default productSlice.reducer;

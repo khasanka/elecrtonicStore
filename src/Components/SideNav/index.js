@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './_side-nav.scss'
 import { useEffect, useState } from 'react';
 import { getCategories } from '../../Redux/Category/actions';
-import { filterProducts } from '../../Redux/Product/productSlice';
+import { filterByPrice, filterProducts } from '../../Redux/Product/productSlice';
 
 const SideNav = () => {
 
@@ -12,6 +12,9 @@ const SideNav = () => {
     // ---- Here we are fech original values from DB (Actually we get data form productReduser here)
     const fetchedProductData = useSelector(state => state.pr);
     const [products, setProducts] = useState();
+    const [minPriceLimit,setMinPriceLimit] = useState(0);
+    const [maxPriceLimit,setMaxPriceLimit] = useState(20000);
+
 
     const dispatch = useDispatch();
     // useEffect(()=>{
@@ -33,7 +36,18 @@ const SideNav = () => {
         dispatch(filterProducts(payload));
     }
 
-    
+    const applyPriceFilter = () => {
+        const payload = {products, minPriceLimit, maxPriceLimit};
+        dispatch(filterByPrice(payload));
+    }
+
+    const setPriceLimit = (e, stateFlag) => {
+        if(stateFlag === 'max') {
+            setMaxPriceLimit(e.target.value);
+        } else  if(stateFlag === 'min') {
+            setMinPriceLimit(e.target.value);
+        }
+    };
 
     return(
 
@@ -42,7 +56,7 @@ const SideNav = () => {
                 <h3>Catogory</h3>
             </div>
 
-            <div className='accordion'>
+            <div className='accordion my-3'>
 
                 {
                    accordionData.map( (accodionCategory, key) => {
@@ -62,7 +76,6 @@ const SideNav = () => {
                                     <div className='accordion-body'>
                                         <ul>
                                             {
-                                                
                                                 accordionData.map((subCategory ) =>{
                                                     if(subCategory.parentCategory == accodionCategory.categoryId) {
                                                         return (
@@ -85,6 +98,39 @@ const SideNav = () => {
 
             </div>
 
+            <div className='price-filter-container'>
+                    <div className='section-title'>
+                        <h3>Filter By Price</h3>
+                    </div>
+                
+                <div>
+                    <label>Min : {minPriceLimit} </label>
+                    <input
+                        className='form-range'
+                        type='range'
+                        min={0}
+                        max={20000}
+                        step={100}
+                        onChange={(e) => setPriceLimit(e,"min")}
+
+                    />
+                </div>
+                <div>
+                    <label>Max : {maxPriceLimit} </label>
+                    <input
+                        className='form-range'
+                        type='range'
+                        min={100}
+                        max={20000}
+                        step={100}
+                        onChange={(e) => setPriceLimit(e,"max")}
+
+                    />
+                </div>
+                <button className='btn btn-outline-dark my-3'
+                    onClick={applyPriceFilter}
+                >Apply Filter</button>
+            </div>
         </div>
 
   

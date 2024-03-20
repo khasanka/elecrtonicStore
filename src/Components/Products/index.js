@@ -3,6 +3,7 @@ import './_products.scss'
 import { useEffect } from 'react';
 import { getProducts } from '../../Redux/Product/action';
 import { addCartItem } from '../../Redux/Cart/CartSlice';
+import { Link } from 'react-router-dom';
 
 
 const Products = () => {
@@ -33,7 +34,9 @@ const Products = () => {
                                 <img src={require('../../assets/'+product.image)}/>
                             </div>
                             <div className='product-info '>
-                                <h5><a href='#'>{product.name}</a></h5>
+                                <h5>
+                                    <Link to="/productDetils">{product.name}</Link>
+                                </h5>
                                 <p className='product-price'>LKR {product.price}</p>
                                 <div className='product-rating'>
                                     <i className='fa fa-star'/>
